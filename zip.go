@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
 type ZipFile struct {
@@ -66,6 +67,16 @@ func (z *ZipFile) Write() error {
 		_, err = file.Write(data)
 	}
 	return nil
+}
+
+func (z *ZipFile) AddFolder(folderPath string) error {
+	err := filepath.Walk(folderPath, func(path string, info os.FileInfo, err error) error {
+		if !info.IsDir() {
+			return z.AddFile(path)
+		}
+		return nil
+	})
+	return err
 }
 
 func NewZipFile(outPath string) (*ZipFile, error) {
