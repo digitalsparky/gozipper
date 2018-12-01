@@ -1,5 +1,7 @@
 Zipping files via Go the 'complete' way
 
+This allows you to add folders (recusive) or files while still maintaining dates and more importantly file permissions, even in windows.
+
 Usage:
 
 ```
